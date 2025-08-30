@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 const forgotPasswordSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -19,6 +20,7 @@ const ForgotPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
+  const { resetPassword } = useAuth();
 
   const {
     register,
@@ -31,8 +33,16 @@ const ForgotPassword = () => {
   const onSubmit = async (data: ForgotPasswordFormData) => {
     setIsLoading(true);
     try {
-      // Simulate API call - replace with actual password reset logic
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const { error } = await resetPassword(data.email);
+      
+      if (error) {
+        toast({
+          title: "Failed to send reset link",
+          description: error.message || "Please try again or contact support if the problem persists",
+          variant: "destructive",
+        });
+        return;
+      }
       
       setIsSubmitted(true);
       toast({
@@ -42,7 +52,7 @@ const ForgotPassword = () => {
     } catch (error) {
       toast({
         title: "Failed to send reset link",
-        description: "Please try again or contact support if the problem persists",
+        description: "An unexpected error occurred. Please try again.",
         variant: "destructive",
       });
     } finally {

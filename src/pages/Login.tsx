@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -21,6 +22,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { signIn } = useAuth();
 
   const {
     register,
@@ -33,10 +35,17 @@ const Login = () => {
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
     try {
-      // Simulate API call - replace with actual authentication logic
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const { error } = await signIn(data.email, data.password);
       
-      // For demo purposes, just show success and redirect
+      if (error) {
+        toast({
+          title: "Login failed",
+          description: error.message || "Please check your credentials and try again",
+          variant: "destructive",
+        });
+        return;
+      }
+      
       toast({
         title: "Login successful!",
         description: "Welcome back to Harvest Link Chain",
@@ -47,7 +56,7 @@ const Login = () => {
     } catch (error) {
       toast({
         title: "Login failed",
-        description: "Please check your credentials and try again",
+        description: "An unexpected error occurred. Please try again.",
         variant: "destructive",
       });
     } finally {

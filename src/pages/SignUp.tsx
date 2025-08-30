@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 const signUpSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
@@ -28,6 +29,7 @@ const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { signUp } = useAuth();
 
   const {
     register,
@@ -64,12 +66,23 @@ const SignUp = () => {
   const onSubmit = async (data: SignUpFormData) => {
     setIsLoading(true);
     try {
-      // Simulate API call - replace with actual registration logic
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const { error } = await signUp(data.email, data.password, {
+        firstName: data.firstName,
+        lastName: data.lastName
+      });
+      
+      if (error) {
+        toast({
+          title: "Registration failed",
+          description: error.message || "Please try again or contact support if the problem persists",
+          variant: "destructive",
+        });
+        return;
+      }
       
       toast({
         title: "Account created successfully!",
-        description: "Welcome to Harvest Link Chain. Please verify your email.",
+        description: "Welcome to Harvest Link Chain. Please check your email to verify your account.",
       });
       
       // Redirect to login page
@@ -77,7 +90,7 @@ const SignUp = () => {
     } catch (error) {
       toast({
         title: "Registration failed",
-        description: "Please try again or contact support if the problem persists",
+        description: "An unexpected error occurred. Please try again.",
         variant: "destructive",
       });
     } finally {

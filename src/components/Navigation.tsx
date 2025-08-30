@@ -1,10 +1,20 @@
 import { Button } from "@/components/ui/button";
-import { Leaf, ShieldCheck, Truck, QrCode, Menu, X, ChevronDown } from "lucide-react";
+import { Leaf, ShieldCheck, Truck, QrCode, Menu, X, ChevronDown, User, LogOut } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, signOut } = useAuth();
 
   return (
     <nav className="bg-white/80 backdrop-blur-lg border-b border-border/50 sticky top-0 z-50 transition-all duration-300">
@@ -46,16 +56,45 @@ export const Navigation = () => {
 
           {/* Enhanced Desktop CTA */}
           <div className="hidden md:flex items-center space-x-3">
-            <Link to="/login">
-              <Button variant="ghost" size="sm" className="text-foreground hover:text-farm-primary">
-                Sign In
-              </Button>
-            </Link>
-            <Link to="/signup">
-              <Button variant="hero" size="sm" className="shadow-lg">
-                Get Started
-              </Button>
-            </Link>
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="flex items-center space-x-2">
+                    <User className="h-4 w-4" />
+                    <span>{user.email}</span>
+                    <ChevronDown className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/profile">Profile</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={signOut} className="text-red-600">
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button variant="ghost" size="sm" className="text-foreground hover:text-farm-primary">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/signup">
+                  <Button variant="hero" size="sm" className="shadow-lg">
+                    Get Started
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Enhanced Mobile menu button */}
@@ -84,16 +123,36 @@ export const Navigation = () => {
                 Stakeholders
               </a>
               <div className="flex flex-col space-y-3 pt-6">
-                <Link to="/login" className="mx-4">
-                  <Button variant="outline" size="sm" className="w-full">
-                    Sign In
-                  </Button>
-                </Link>
-                <Link to="/signup" className="mx-4">
-                  <Button variant="hero" size="sm" className="w-full">
-                    Get Started
-                  </Button>
-                </Link>
+                {user ? (
+                  <>
+                    <div className="mx-4 px-4 py-2 text-sm text-muted-foreground border-b border-border/50">
+                      Signed in as {user.email}
+                    </div>
+                    <Link to="/dashboard" className="mx-4">
+                      <Button variant="outline" size="sm" className="w-full">
+                        Dashboard
+                      </Button>
+                    </Link>
+                    <button onClick={signOut} className="mx-4">
+                      <Button variant="outline" size="sm" className="w-full text-red-600 hover:text-red-700">
+                        Sign Out
+                      </Button>
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/login" className="mx-4">
+                      <Button variant="outline" size="sm" className="w-full">
+                        Sign In
+                      </Button>
+                    </Link>
+                    <Link to="/signup" className="mx-4">
+                      <Button variant="hero" size="sm" className="w-full">
+                        Get Started
+                      </Button>
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
