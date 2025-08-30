@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, ShieldCheck, Eye, Users, Play, Star, TrendingUp, Globe } from "lucide-react";
 import farmHero from "@/assets/farm-hero.jpg";
+import { Link } from "react-router-dom";
 
 export const Hero = () => {
   return (
@@ -91,10 +92,12 @@ export const Hero = () => {
 
             {/* Enhanced CTA Section */}
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
-              <Button variant="hero" size="lg" className="group text-lg px-8 py-4 h-auto shadow-2xl">
-                Start Tracking
-                <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              <Link to="/signup">
+                <Button variant="hero" size="lg" className="group text-lg px-8 py-4 h-auto shadow-2xl">
+                  Start Tracking
+                  <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
               <Button variant="outline" size="lg" className="group text-lg px-8 py-4 h-auto border-2">
                 <Play className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" />
                 Watch Demo

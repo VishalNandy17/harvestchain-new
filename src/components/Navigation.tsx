@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Leaf, ShieldCheck, Truck, QrCode, Menu, X, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -45,12 +46,16 @@ export const Navigation = () => {
 
           {/* Enhanced Desktop CTA */}
           <div className="hidden md:flex items-center space-x-3">
-            <Button variant="ghost" size="sm" className="text-foreground hover:text-farm-primary">
-              Sign In
-            </Button>
-            <Button variant="hero" size="sm" className="shadow-lg">
-              Get Started
-            </Button>
+            <Link to="/login">
+              <Button variant="ghost" size="sm" className="text-foreground hover:text-farm-primary">
+                Sign In
+              </Button>
+            </Link>
+            <Link to="/signup">
+              <Button variant="hero" size="sm" className="shadow-lg">
+                Get Started
+              </Button>
+            </Link>
           </div>
 
           {/* Enhanced Mobile menu button */}
@@ -79,12 +84,16 @@ export const Navigation = () => {
                 Stakeholders
               </a>
               <div className="flex flex-col space-y-3 pt-6">
-                <Button variant="outline" size="sm" className="mx-4">
-                  Sign In
-                </Button>
-                <Button variant="hero" size="sm" className="mx-4">
-                  Get Started
-                </Button>
+                <Link to="/login" className="mx-4">
+                  <Button variant="outline" size="sm" className="w-full">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/signup" className="mx-4">
+                  <Button variant="hero" size="sm" className="w-full">
+                    Get Started
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
