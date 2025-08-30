@@ -18,6 +18,10 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        hero: "bg-gradient-to-r from-farm-primary to-farm-secondary text-white hover:shadow-lg hover:scale-105 transition-all duration-300 shadow-md",
+        blockchain: "bg-gradient-to-r from-blockchain-blue to-farm-primary text-white hover:shadow-lg hover:scale-105 transition-all duration-300",
+        verified: "bg-trust-green text-white hover:bg-trust-green/90 shadow-sm",
+        harvest: "bg-harvest-amber text-white hover:bg-harvest-amber/90 transition-all duration-300",
       },
       size: {
         default: "h-10 px-4 py-2",

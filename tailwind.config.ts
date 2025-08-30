@@ -52,6 +52,22 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				farm: {
+					primary: 'hsl(var(--farm-primary))',
+					secondary: 'hsl(var(--farm-secondary))',
+				},
+				blockchain: {
+					blue: 'hsl(var(--blockchain-blue))',
+				},
+				harvest: {
+					amber: 'hsl(var(--harvest-amber))',
+				},
+				trust: {
+					green: 'hsl(var(--trust-green))',
+				},
+				verified: {
+					badge: 'hsl(var(--verified-badge))',
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
