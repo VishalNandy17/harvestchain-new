@@ -5,6 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+  "dev:contracts": "pnpm --filter @hlc/contracts dev || cd packages/contracts && npx hardhat node",
+  "dev:api": "cd services/api && pnpm dev",
+  "dev:web": "pnpm dev",
+  "dev:all": "concurrently \"pnpm dev:contracts\" \"pnpm dev:api\" \"pnpm dev:web\"",
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
