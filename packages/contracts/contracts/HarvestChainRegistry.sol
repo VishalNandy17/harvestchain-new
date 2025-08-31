@@ -12,6 +12,9 @@ import "@openzeppelin/contracts/utils/Strings.sol";
  * @author Harvest Chain Team
  */
 contract HarvestChainRegistry is AccessControl, ReentrancyGuard {
+    // No changes needed, keep local version
+}
+contract HarvestChainRegistry is AccessControl, ReentrancyGuard {
     using Counters for Counters.Counter;
     using Strings for uint256;
 
