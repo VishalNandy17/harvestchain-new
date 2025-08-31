@@ -2,5 +2,10 @@
 *.json filter=lfs diff=lfs merge=lfs -text
 *.lock filter=lfs diff=lfs merge=lfs -text
 
-# Exclude package.json from Git LFS
+# Exclude important JSON files from Git LFS
 package.json -filter=lfs -diff=lfs -merge=lfs text
+*/package.json -filter=lfs -diff=lfs -merge=lfs text
+*/*/package.json -filter=lfs -diff=lfs -merge=lfs text
+manifest.json -filter=lfs -diff=lfs -merge=lfs text
+tsconfig.json -filter=lfs -diff=lfs -merge=lfs text
+*/tsconfig.json -filter=lfs -diff=lfs -merge=lfs text
